@@ -66,9 +66,9 @@ export default function Navbar() {
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center group">
             <img
-              src="/logo.svg"
+              src="/jk-logo.png"
               alt="JE'LEYN"
-              className="h-16 sm:h-20 w-auto object-contain drop-shadow-[0_0_20px_rgba(201,168,76,0.35)] group-hover:drop-shadow-[0_0_30px_rgba(201,168,76,0.55)] transition-all duration-500"
+              className="h-14 sm:h-18 w-auto object-contain drop-shadow-[0_0_25px_rgba(201,168,76,0.45)] group-hover:drop-shadow-[0_0_40px_rgba(201,168,76,0.65)] transition-all duration-500"
             />
           </Link>
 
