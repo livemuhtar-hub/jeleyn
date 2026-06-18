@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 400" fill="none">
+  <defs>
+    <!-- Rich gold base gradient (vertical) -->
+    <linearGradient id="goldV" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#d4a843"/>
+      <stop offset="15%" style="stop-color:#e6c76b"/>
+      <stop offset="30%" style="stop-color:#f2dfa0"/>
+      <stop offset="45%" style="stop-color:#fffbe6"/>
+      <stop offset="55%" style="stop-color:#f2dfa0"/>
+      <stop offset="70%" style="stop-color:#d9b455"/>
+      <stop offset="85%" style="stop-color:#b8923a"/>
+      <stop offset="100%" style="stop-color:#c9a84c"/>
+    </linearGradient>
+
+    <!-- Horizontal shine sweep -->
+    <linearGradient id="shine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#b8923a"/>
+      <stop offset="25%" style="stop-color:#d9b455"/>
+      <stop offset="40%" style="stop-color:#f5e6a3"/>
+      <stop offset="50%" style="stop-color:#fffdf0"/>
+      <stop offset="60%" style="stop-color:#f5e6a3"/>
+      <stop offset="75%" style="stop-color:#d9b455"/>
+      <stop offset="100%" style="stop-color:#b8923a"/>
+    </linearGradient>
+
+    <!-- Diagonal luxury gradient -->
+    <linearGradient id="goldD" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#c49b38"/>
+      <stop offset="20%" style="stop-color:#dbb960"/>
+      <stop offset="40%" style="stop-color:#f0da8e"/>
+      <stop offset="50%" style="stop-color:#fdf3cc"/>
+      <stop offset="60%" style="stop-color:#f0da8e"/>
+      <stop offset="80%" style="stop-color:#dbb960"/>
+      <stop offset="100%" style="stop-color:#c49b38"/>
+    </linearGradient>
+
+    <!-- Warm glow -->
+    <filter id="warmGlow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="3.5" result="blur"/>
+      <feFlood flood-color="#d4a843" flood-opacity="0.3" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Soft text glow -->
+    <filter id="textGlow" x="-15%" y="-15%" width="130%" height="130%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feFlood flood-color="#e6c76b" flood-opacity="0.4" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Circle ambient glow -->
+    <filter id="ringGlow" x="-35%" y="-35%" width="170%" height="170%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feFlood flood-color="#d9b455" flood-opacity="0.25" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Ambient ring glow -->
+  <circle cx="260" cy="120" r="88" stroke="#d9b455" stroke-width="1" fill="none" opacity="0.08" filter="url(#ringGlow)"/>
+
+  <!-- Main circle -->
+  <circle cx="260" cy="120" r="76" stroke="url(#goldD)" stroke-width="2" fill="none" filter="url(#warmGlow)"/>
+
+  <!-- Inner thin circle -->
+  <circle cx="260" cy="120" r="69" stroke="url(#shine)" stroke-width="0.5" fill="none" opacity="0.35"/>
+
+  <!-- JLK monogram -->
+  <text x="232" y="138" font-family="Georgia, 'Playfair Display', serif" font-size="52" font-style="normal" font-weight="400" fill="url(#goldV)" text-anchor="middle" filter="url(#textGlow)">J</text>
+  <text x="268" y="138" font-family="Georgia, 'Playfair Display', serif" font-size="52" font-style="normal" font-weight="400" fill="url(#goldV)" text-anchor="middle" filter="url(#textGlow)">L</text>
+  <text x="295" y="132" font-family="Georgia, 'Playfair Display', serif" font-size="34" font-style="normal" font-weight="400" fill="url(#goldV)" text-anchor="middle" filter="url(#textGlow)">K</text>
+
+  <!-- Decorative flowing swirl (matching the original logo style) -->
+  <path d="M205 158 Q225 148 245 155 Q260 160 275 155 Q290 150 310 158 Q320 162 325 155" stroke="url(#shine)" stroke-width="1.8" fill="none" stroke-linecap="round" filter="url(#warmGlow)"/>
+  <path d="M200 162 Q215 155 230 160 Q245 165 260 160" stroke="url(#shine)" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.5"/>
+
+  <!-- JE'LEYN main text -->
+  <text x="260" y="278" font-family="Georgia, 'Playfair Display', serif" font-size="72" font-weight="400" letter-spacing="16" fill="url(#goldV)" text-anchor="middle" filter="url(#textGlow)">JE'LEYN</text>
+
+  <!-- Decorative line left -->
+  <line x1="60" y1="302" x2="195" y2="302" stroke="url(#shine)" stroke-width="0.7" opacity="0.35"/>
+  <!-- Decorative line right -->
+  <line x1="325" y1="302" x2="460" y2="302" stroke="url(#shine)" stroke-width="0.7" opacity="0.35"/>
+  <!-- Center ornament -->
+  <path d="M253 302 L260 295 L267 302 L260 309 Z" fill="url(#goldD)" opacity="0.45" filter="url(#warmGlow)"/>
+</svg>
