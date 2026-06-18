@@ -8,8 +8,8 @@ const WHATSAPP_NUMBER = '905369321474'
 
 const bankInfo = {
   bankName: 'Ziraat Bankası',
-  accountHolder: "JE'LEYN TEKSTİL",
-  iban: 'TR00 0000 0000 0000 0000 0000 00',
+  accountHolder: 'JK Layali Güzellik Merkezi',
+  iban: 'TR66 0001 0019 1098 3058 1950 01',
 }
 
 export default function CheckoutPage() {
