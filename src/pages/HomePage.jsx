@@ -15,14 +15,13 @@ export default function HomePage() {
     <div>
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-black">
           {/* Video Background */}
           <video
             autoPlay
             muted
             loop
             playsInline
-            poster="https://images.pexels.com/photos/9880858/pexels-photo-9880858.jpeg?auto=compress&cs=tinysrgb&w=1920"
             className="w-full h-full object-cover scale-110 animate-[slowZoom_25s_ease-in-out_infinite_alternate]"
           >
             <source src="/hero-video.mp4" type="video/mp4" />
