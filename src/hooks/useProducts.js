@@ -1,103 +1,81 @@
 import { useState, useEffect } from 'react'
-import { supabase } from '../lib/supabase'
 import { products as localProducts, categories as localCategories } from '../data/products'
 
+const STORAGE_KEY = 'jeleyn_products'
+
+function loadProducts() {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY)
+    if (stored) return JSON.parse(stored)
+  } catch (e) {
+    console.log('localStorage okuma hatası:', e.message)
+  }
+  return localProducts
+}
+
+function saveProducts(products) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(products))
+  } catch (e) {
+    console.log('localStorage yazma hatası:', e.message)
+  }
+}
+
+function getCategories(products) {
+  const cats = ['all', ...new Set(products.map(p => p.category))]
+  return cats.map(c => {
+    if (c === 'all') return { id: 'all', name: 'Tümü', icon: 'grid' }
+    const found = localCategories.find(lc => lc.id === c)
+    return found || { id: c, name: c, icon: 'shirt' }
+  })
+}
+
 export function useProducts() {
-  const [products, setProducts] = useState(localProducts)
-  const [categories, setCategories] = useState(localCategories)
-  const [loading, setLoading] = useState(true)
+  const [products, setProducts] = useState(() => loadProducts())
+  const [categories, setCategories] = useState(() => getCategories(loadProducts()))
+  const [loading, setLoading] = useState(false)
 
-  const fetchProducts = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('products')
-        .select('*')
-        .order('id', { ascending: true })
-
-      if (error) throw error
-
-      if (data && data.length > 0) {
-        setProducts(data)
-        const cats = ['all', ...new Set(data.map(p => p.category))]
-        setCategories(cats.map(c => {
-          if (c === 'all') return { id: 'all', name: 'Tümü', icon: 'grid' }
-          const found = localCategories.find(lc => lc.id === c)
-          return found || { id: c, name: c, icon: 'shirt' }
-        }))
-      }
-    } catch (err) {
-      console.log('Supabase bağlantısı yok, yerel veriler kullanılıyor:', err.message)
-    } finally {
-      setLoading(false)
-    }
+  const refetch = () => {
+    const data = loadProducts()
+    setProducts(data)
+    setCategories(getCategories(data))
   }
 
-  useEffect(() => {
-    fetchProducts()
-  }, [])
-
-  return { products, categories, loading, refetch: fetchProducts }
+  return { products, categories, loading, refetch }
 }
 
 export async function getProductById(id) {
-  try {
-    const { data, error } = await supabase
-      .from('products')
-      .select('*')
-      .eq('id', id)
-      .single()
-
-    if (error) throw error
-    return data
-  } catch {
-    return localProducts.find(p => p.id === parseInt(id)) || null
-  }
+  const products = loadProducts()
+  return products.find(p => p.id === parseInt(id)) || null
 }
 
 export async function addProduct(product) {
-  const { data, error } = await supabase
-    .from('products')
-    .insert([product])
-    .select()
-
-  if (error) throw error
-  return data?.[0] || data
+  const products = loadProducts()
+  const maxId = products.reduce((max, p) => Math.max(max, p.id || 0), 0)
+  const newProduct = { ...product, id: maxId + 1 }
+  const updated = [...products, newProduct]
+  saveProducts(updated)
+  return newProduct
 }
 
 export async function updateProduct(id, updates) {
-  const { data, error } = await supabase
-    .from('products')
-    .update(updates)
-    .eq('id', id)
-    .select()
-
-  if (error) throw error
-  return data?.[0] || data
+  const products = loadProducts()
+  const updated = products.map(p => p.id === parseInt(id) ? { ...p, ...updates, id: parseInt(id) } : p)
+  saveProducts(updated)
+  return updated.find(p => p.id === parseInt(id))
 }
 
 export async function deleteProduct(id) {
-  const { error } = await supabase
-    .from('products')
-    .delete()
-    .eq('id', id)
-
-  if (error) throw error
+  const products = loadProducts()
+  const updated = products.filter(p => p.id !== parseInt(id))
+  saveProducts(updated)
 }
 
 export async function uploadImage(file) {
-  const fileExt = file.name.split('.').pop()
-  const fileName = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}.${fileExt}`
-  const filePath = `products/${fileName}`
-
-  const { error } = await supabase.storage
-    .from('product-images')
-    .upload(filePath, file)
-
-  if (error) throw error
-
-  const { data } = supabase.storage
-    .from('product-images')
-    .getPublicUrl(filePath)
-
-  return data.publicUrl
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onloadend = () => resolve(reader.result)
+    reader.onerror = reject
+    reader.readAsDataURL(file)
+  })
 }
