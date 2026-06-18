@@ -68,7 +68,7 @@ export default function Navbar() {
             <img
               src="/jk-logo.svg"
               alt="JE'LEYN"
-              className="h-14 sm:h-18 w-auto object-contain drop-shadow-[0_0_25px_rgba(201,168,76,0.45)] group-hover:drop-shadow-[0_0_40px_rgba(201,168,76,0.65)] transition-all duration-500"
+              className="h-20 sm:h-28 w-auto object-contain drop-shadow-[0_0_25px_rgba(201,168,76,0.45)] group-hover:drop-shadow-[0_0_40px_rgba(201,168,76,0.65)] transition-all duration-500"
             />
           </Link>
 
